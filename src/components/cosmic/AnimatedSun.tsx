@@ -20,11 +20,16 @@ function TwinkleStar({ className }: { className: string }) {
 
 type AnimatedSunProps = {
   className?: string;
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
 };
 
 export function AnimatedSun({ className, size = "md" }: AnimatedSunProps) {
-  const scale = size === "sm" ? "scale-[0.72]" : "scale-100";
+  const scale =
+    size === "sm"
+      ? "scale-[0.72]"
+      : size === "lg"
+        ? "scale-[1.35] md:scale-[1.5]"
+        : "scale-100";
 
   return (
     <div

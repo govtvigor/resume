@@ -115,3 +115,9 @@ html {
 .delay-300 {
   animation-delay: 300ms;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-scroll-sections {
+    scroll-behavior: smooth;
+  }
+}
