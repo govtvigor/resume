@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/layout/site-header";
 import { HoloPanel } from "@/components/cosmic/HoloPanel";
 import { buttonVariants } from "@/components/ui/button";
+import { cv } from "@/lib/cv-data";
 import { cn } from "@/lib/utils";
 
 export const metadata = {
@@ -25,14 +26,44 @@ export default function ProjectsGalaxyPage() {
             Projects
           </h1>
           <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-            This section will host GitHub repos, README previews, and live demo
-            links. For now, see highlighted work on the{" "}
+            Selected work — full details on the{" "}
             <Link href="/about" className="text-cyan-300 hover:underline">
               About
             </Link>{" "}
-            page: CoinLift, onchainme.to, and Squirrel Telegram Mini App.
+            page.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <ul className="mt-8 space-y-4">
+            <li>
+              <a
+                href={cv.experience[0].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-lg font-medium text-cyan-300 hover:underline"
+              >
+                SHP Network — shp.network
+              </a>
+              <p className="mt-1 text-sm text-muted-foreground">Current role</p>
+            </li>
+            {cv.projects.map((project) => (
+              <li key={project.name}>
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-lg font-medium text-cyan-300 hover:underline"
+                >
+                  {project.name}
+                  {"linkLabel" in project && project.linkLabel
+                    ? ` (${project.linkLabel})`
+                    : null}
+                </a>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {project.description}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8">
             <Link href="/about" className={cn(buttonVariants({ size: "sm" }))}>
               View CV
             </Link>

@@ -1,6 +1,7 @@
 export const cv = {
   name: "Igor Govtvan",
   role: "Frontend Developer",
+  email: "igorgovtvian9@gmail.com",
   age: 22,
   education: {
     school: "Czech University of Life Sciences Prague (CZU)",
@@ -16,6 +17,7 @@ export const cv = {
   experience: [
     {
       company: "SHP Network",
+      url: "https://shp.network",
       role: "Frontend Developer",
       period: "Present",
       description:
@@ -31,6 +33,7 @@ export const cv = {
   projects: [
     {
       name: "CoinLift",
+      url: "https://coinlift.studio",
       type: "Non-commercial",
       role: "Frontend Developer",
       description:
@@ -39,6 +42,7 @@ export const cv = {
     },
     {
       name: "onchainme.to",
+      url: "https://onchainme.to",
       role: "Frontend Developer",
       description:
         "Web3-facing frontend for on-chain identity and profile experiences.",
@@ -46,7 +50,8 @@ export const cv = {
     },
     {
       name: "Squirrel App",
-      slug: "@squirrelapp_bot",
+      url: "https://t.me/squirrelapp_bot",
+      linkLabel: "@squirrelapp_bot",
       role: "Frontend Developer",
       description:
         "Telegram Mini App — clicker-style game with in-app UI and progression flows.",

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { ExternalLink } from "lucide-react";
 import { cv } from "@/lib/cv-data";
 import { ContactForm } from "@/components/contact/contact-form";
 import { CelestialBody } from "@/components/cosmic/CelestialBody";
@@ -38,7 +39,13 @@ export function CvDocument() {
                 {cv.name}
               </h1>
               <p className="mt-2 text-lg text-muted-foreground">{cv.role}</p>
-              <p className="mt-3 text-sm text-foreground/80">{cv.age} years old</p>
+              <a
+                href={`mailto:${cv.email}`}
+                className="mt-2 inline-block text-sm text-cyan-300 hover:text-cyan-200 hover:underline"
+              >
+                {cv.email}
+              </a>
+              <p className="mt-2 text-sm text-foreground/80">{cv.age} years old</p>
             </div>
             <CelestialBody
               variant="sun"
@@ -84,7 +91,19 @@ export function CvDocument() {
               {cv.experience.map((job) => (
                 <li key={job.company} className="space-y-1">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <p className="font-semibold text-foreground">{job.company}</p>
+                    {"url" in job && job.url ? (
+                      <a
+                        href={job.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-semibold text-foreground hover:text-cyan-300"
+                      >
+                        {job.company}
+                        <ExternalLink className="size-3.5 opacity-70" aria-hidden />
+                      </a>
+                    ) : (
+                      <p className="font-semibold text-foreground">{job.company}</p>
+                    )}
                     <span className="text-xs text-cyan-300/90">
                       {job.period}
                       {job.current ? " · current" : ""}
@@ -109,7 +128,17 @@ export function CvDocument() {
                   className="border-l-2 border-cyan-500/30 pl-4"
                 >
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-semibold text-foreground">{project.name}</p>
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-semibold text-foreground hover:text-cyan-300"
+                    >
+                      {"linkLabel" in project && project.linkLabel
+                        ? project.linkLabel
+                        : project.name}
+                      <ExternalLink className="size-3.5 opacity-70" aria-hidden />
+                    </a>
                     {"type" in project && project.type ? (
                       <Badge variant="outline" className="text-[10px]">
                         {project.type}
@@ -117,10 +146,11 @@ export function CvDocument() {
                     ) : null}
                   </div>
                   <p className="text-sm text-muted-foreground">{project.role}</p>
-                  {"slug" in project && project.slug ? (
-                    <p className="text-xs text-cyan-300/80">
-                      Telegram: {project.slug}
-                    </p>
+                  {"url" in project &&
+                  project.url &&
+                  "linkLabel" in project &&
+                  project.linkLabel ? (
+                    <p className="text-xs text-muted-foreground">{project.name}</p>
                   ) : null}
                   <p className="mt-2 text-sm leading-relaxed text-foreground/80">
                     {project.description}
@@ -163,7 +193,14 @@ export function CvDocument() {
 
           <CvSection title="Contact">
             <p className="text-sm text-muted-foreground">
-              Send a message and I will get back to you.
+              Send a message — it goes to{" "}
+              <a
+                href={`mailto:${cv.email}`}
+                className="text-cyan-300 hover:underline"
+              >
+                {cv.email}
+              </a>
+              .
             </p>
             <ContactForm className="mt-4 max-w-md" />
           </CvSection>
