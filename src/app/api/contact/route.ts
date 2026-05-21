@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { contactSchema } from "@/lib/contact-schema";
 
-const DEFAULT_TO = "igorgovtvian9@gmail.com";
+/** Resend test mode only delivers to the email verified in your Resend account. */
+const DEFAULT_TO = "govtvianigor@gmail.com";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -34,7 +35,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true });
     }
     return NextResponse.json(
-      { error: "Email delivery is not configured." },
+      {
+        error:
+          "Email delivery is not configured on the server (missing RESEND_API_KEY).",
+      },
       { status: 503 }
     );
   }
@@ -57,8 +61,15 @@ export async function POST(request: Request) {
 
   if (error) {
     console.error("[contact] Resend error:", error);
+    const hint =
+      error.message?.includes("testing emails") ||
+      error.message?.includes("verify a domain")
+        ? "Set CONTACT_EMAIL_TO to your verified Resend inbox, or verify a domain at resend.com/domains."
+        : null;
     return NextResponse.json(
-      { error: "Could not send email. Try again later." },
+      {
+        error: hint ?? "Could not send email. Try again later.",
+      },
       { status: 502 }
     );
   }
