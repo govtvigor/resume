@@ -1,0 +1,172 @@
+/* Inspired by Uiverse.io reyrojo2 — scoped for React */
+
+.banner {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+}
+
+.disc {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #ffd27a,
+    #ff8c00,
+    #ffb453,
+    #ff6a00,
+    #ffd27a
+  );
+  background-size: 200% 200%;
+  animation:
+    sunRotate 18s linear infinite,
+    shadowPulse 5s ease-in-out infinite,
+    planetSpin 28s linear infinite;
+  box-shadow:
+    0 0 40px 20px rgba(255, 140, 0, 0.75),
+    -5px 0 10px 1px #ffb453 inset,
+    15px 2px 40px 20px rgba(187, 109, 1, 0.78) inset,
+    -24px -2px 50px 25px rgba(255, 162, 101, 0.76) inset,
+    80px 0 60px 30px rgba(197, 95, 0, 0.55) inset;
+}
+
+@keyframes planetSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes sunRotate {
+  0% {
+    background-position: 0% 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    background-position: 100% 50%;
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes shadowPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 40px 20px rgba(255, 140, 0, 0.75),
+      -5px 0 10px 1px #ffb453 inset,
+      15px 2px 40px 20px rgba(187, 109, 1, 0.78) inset,
+      -24px -2px 50px 25px rgba(255, 162, 101, 0.76) inset,
+      80px 0 60px 30px rgba(197, 95, 0, 0.55) inset;
+  }
+  50% {
+    box-shadow:
+      0 0 55px 28px rgba(255, 140, 0, 0.9),
+      -5px 0 18px 4px #ffb453 inset,
+      15px 2px 55px 28px rgba(187, 109, 1, 0.85) inset,
+      -24px -2px 65px 32px rgba(255, 162, 101, 0.82) inset,
+      80px 0 75px 38px rgba(197, 95, 0, 0.65) inset;
+  }
+}
+
+@keyframes twinkling {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.curvedCornerStar {
+  display: flex;
+  position: relative;
+}
+
+.corner {
+  width: 4px;
+  height: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.corner::before {
+  content: "";
+  display: block;
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cornerBl::before {
+  bottom: 0;
+  left: 0;
+  box-shadow: -5px 5px 0 0 #fff;
+}
+
+.cornerBr::before {
+  bottom: 0;
+  right: 0;
+  box-shadow: 5px 5px 0 0 #fff;
+}
+
+.cornerTl::before {
+  top: 0;
+  left: 0;
+  box-shadow: -5px -5px 0 0 #fff;
+}
+
+.cornerTr::before {
+  top: 0;
+  right: 0;
+  box-shadow: 5px -5px 0 0 #fff;
+}
+
+.star {
+  position: absolute;
+  animation: twinkling 3s infinite;
+}
+
+.star1 {
+  left: 8px;
+  top: 40px;
+  animation-duration: 3s;
+}
+.star2 {
+  left: 24px;
+  top: 72px;
+  animation-duration: 2s;
+}
+.star3 {
+  right: 12px;
+  top: 28px;
+  animation-duration: 4s;
+}
+.star4 {
+  right: 48px;
+  bottom: 18px;
+  animation-duration: 3s;
+}
+.star5 {
+  left: 56px;
+  bottom: 24px;
+  animation-duration: 1.5s;
+}
+.star6 {
+  left: 120px;
+  top: 4px;
+  animation-duration: 4s;
+}
+.star7 {
+  right: 28px;
+  top: 64px;
+  animation-duration: 2s;
+}
