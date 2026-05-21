@@ -17,9 +17,9 @@ export type GalaxyPortalProps = {
 };
 
 const badgeLabel: Record<GalaxyPortalProps["badge"], string> = {
-  live: "ONLINE",
-  alpha: "ALPHA",
-  soon: "SOON",
+  live: "Live",
+  alpha: "In progress",
+  soon: "Soon",
 };
 
 const accentText: Record<GalaxyPortalProps["accent"], string> = {
@@ -90,7 +90,7 @@ export function GalaxyPortal({
             accentText[accent]
           )}
         >
-          Enter sector
+          Open
           <ArrowRight className="size-3" />
         </span>
       </div>

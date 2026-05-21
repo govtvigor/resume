@@ -1,25 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import { cv } from "@/lib/cv-data";
+import { ContactForm } from "@/components/contact/contact-form";
 import { CelestialBody } from "@/components/cosmic/CelestialBody";
-import { Skeleton } from "@/components/ui/skeleton";
-
-const ContactForm = dynamic(
-  () =>
-    import("@/components/contact/contact-form").then((m) => m.ContactForm),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="mt-4 max-w-md space-y-3">
-        <Skeleton className="h-9 w-full" />
-        <Skeleton className="h-9 w-full" />
-        <Skeleton className="h-24 w-full" />
-      </div>
-    ),
-  }
-);
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
@@ -32,7 +16,7 @@ function CvSection({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="border-b border-foreground/15 pb-1 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">
+      <h2 className="border-b border-foreground/15 pb-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">
         {title}
       </h2>
       {children}
@@ -47,16 +31,14 @@ export function CvDocument() {
         <header className="border-b border-foreground/10 pb-8">
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0 flex-1">
-          <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-muted-foreground">
-            Curriculum Vitae
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            {cv.name}
-          </h1>
-          <p className="mt-2 text-lg text-muted-foreground">{cv.role}</p>
-          <p className="mt-3 font-mono text-sm text-foreground/80">
-            {cv.age} years old
-          </p>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                Curriculum Vitae
+              </p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                {cv.name}
+              </h1>
+              <p className="mt-2 text-lg text-muted-foreground">{cv.role}</p>
+              <p className="mt-3 text-sm text-foreground/80">{cv.age} years old</p>
             </div>
             <CelestialBody
               variant="sun"
@@ -79,9 +61,7 @@ export function CvDocument() {
             <div>
               <p className="font-medium text-foreground">{cv.education.school}</p>
               <p className="text-sm text-muted-foreground">{cv.education.program}</p>
-              <p className="mt-1 font-mono text-xs uppercase tracking-wider text-cyan-400/90">
-                {cv.education.status}
-              </p>
+              <p className="mt-1 text-xs text-cyan-400/90">{cv.education.status}</p>
             </div>
           </CvSection>
 
@@ -105,7 +85,7 @@ export function CvDocument() {
                 <li key={job.company} className="space-y-1">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <p className="font-semibold text-foreground">{job.company}</p>
-                    <span className="font-mono text-xs text-cyan-300/90">
+                    <span className="text-xs text-cyan-300/90">
                       {job.period}
                       {job.current ? " · current" : ""}
                     </span>
@@ -131,14 +111,14 @@ export function CvDocument() {
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-semibold text-foreground">{project.name}</p>
                     {"type" in project && project.type ? (
-                      <Badge variant="outline" className="font-mono text-[10px]">
+                      <Badge variant="outline" className="text-[10px]">
                         {project.type}
                       </Badge>
                     ) : null}
                   </div>
                   <p className="text-sm text-muted-foreground">{project.role}</p>
                   {"slug" in project && project.slug ? (
-                    <p className="font-mono text-xs text-cyan-300/80">
+                    <p className="text-xs text-cyan-300/80">
                       Telegram: {project.slug}
                     </p>
                   ) : null}
@@ -147,11 +127,7 @@ export function CvDocument() {
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {project.tags.map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="secondary"
-                        className="font-mono text-[10px]"
-                      >
+                      <Badge key={tag} variant="secondary" className="text-[10px]">
                         {tag}
                       </Badge>
                     ))}
@@ -175,28 +151,24 @@ export function CvDocument() {
             </ul>
           </CvSection>
 
-          <CvSection title="Contact">
-            <p className="text-sm text-muted-foreground">
-              Send a message — validated with Zod on the client and server.
-            </p>
-            <ContactForm className="mt-4 max-w-md" />
-          </CvSection>
-
           <CvSection title="Core Skills">
             <div className="flex flex-wrap gap-2">
               {cv.skills.map((skill) => (
-                <Badge key={skill} variant="outline" className="font-mono text-xs">
+                <Badge key={skill} variant="outline" className="text-xs">
                   {skill}
                 </Badge>
               ))}
             </div>
           </CvSection>
 
-          <Separator className="opacity-30" />
+          <CvSection title="Contact">
+            <p className="text-sm text-muted-foreground">
+              Send a message and I will get back to you.
+            </p>
+            <ContactForm className="mt-4 max-w-md" />
+          </CvSection>
 
-          <p className="text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            Portfolio — CI runs lint, tests, and build on every GitHub push.
-          </p>
+          <Separator className="opacity-30" />
         </div>
       </article>
     </main>

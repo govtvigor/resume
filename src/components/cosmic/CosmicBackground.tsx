@@ -38,7 +38,7 @@ export function CosmicBackground() {
 
     let stars: Star[] = [];
     let raf = 0;
-    let t0 = performance.now();
+    const t0 = performance.now();
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio ?? 1, 2);
