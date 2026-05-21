@@ -1,8 +1,12 @@
 export const cv = {
-  name: "Igor Govtvan",
+  name: "Igor Govtvian",
   role: "Frontend Developer",
   email: "igorgovtvian9@gmail.com",
   age: 22,
+  social: {
+    github: "https://github.com/govtvigor",
+    linkedin: "https://www.linkedin.com/in/igor-govtvian-060bb32a4",
+  },
   education: {
     school: "Czech University of Life Sciences Prague (CZU)",
     program: "Informatics",

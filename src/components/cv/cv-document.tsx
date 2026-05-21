@@ -1,38 +1,22 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { ExternalLink } from "lucide-react";
 import { cv } from "@/lib/cv-data";
 import { ContactForm } from "@/components/contact/contact-form";
 import { CelestialBody } from "@/components/cosmic/CelestialBody";
+import { CvSection } from "@/components/cv/cv-section";
 import { Badge } from "@/components/ui/badge";
+import { SocialLinks } from "@/components/layout/social-links";
 import { Separator } from "@/components/ui/separator";
-
-function CvSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <section className="space-y-3">
-      <h2 className="border-b border-foreground/15 pb-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">
-        {title}
-      </h2>
-      {children}
-    </section>
-  );
-}
 
 export function CvDocument() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10 md:px-8 md:py-14">
-      <article className="border border-foreground/12 bg-[#0c0c14]/90 p-8 shadow-[0_0_60px_-20px_rgba(34,211,238,0.25)] md:p-12">
+    <main className="mx-auto max-w-3xl px-4 py-8 sm:px-5 sm:py-10 md:px-8 md:py-14">
+      <article className="border border-foreground/12 bg-[#0c0c14]/90 p-4 shadow-[0_0_60px_-20px_rgba(34,211,238,0.25)] sm:p-6 md:p-10 lg:p-12">
         <header className="border-b border-foreground/10 pb-8">
           <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground">
                 Curriculum Vitae
               </p>
               <h1 className="mt-2 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -46,6 +30,7 @@ export function CvDocument() {
                 {cv.email}
               </a>
               <p className="mt-2 text-sm text-foreground/80">{cv.age} years old</p>
+              <SocialLinks className="mt-4" showLabels />
             </div>
             <CelestialBody
               variant="sun"
@@ -140,7 +125,7 @@ export function CvDocument() {
                       <ExternalLink className="size-3.5 opacity-70" aria-hidden />
                     </a>
                     {"type" in project && project.type ? (
-                      <Badge variant="outline" className="text-[10px]">
+                      <Badge variant="outline" className="text-xs">
                         {project.type}
                       </Badge>
                     ) : null}
@@ -157,7 +142,7 @@ export function CvDocument() {
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-[10px]">
+                      <Badge key={tag} variant="secondary" className="text-xs">
                         {tag}
                       </Badge>
                     ))}

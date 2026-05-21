@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Orbit } from "lucide-react";
 import { AuthActions } from "@/components/auth/auth-actions";
+import { SocialLinks } from "@/components/layout/social-links";
 import { Separator } from "@/components/ui/separator";
 
 const navLinks = [
@@ -13,7 +14,7 @@ const navLinks = [
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-cyan-500/25 bg-[#050510]/85 backdrop-blur-xl">
+    <header className="site-header sticky top-0 z-50 w-full border-b border-cyan-500/25 bg-[#050510]/85 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4 md:px-8">
         <Link
           href="/"
@@ -22,7 +23,7 @@ export function SiteHeader() {
           <span className="flex size-8 items-center justify-center border border-cyan-400/40 bg-transparent text-cyan-300">
             <Orbit className="size-4" aria-hidden />
           </span>
-          <span className="hidden font-mono text-[11px] font-semibold uppercase tracking-widest text-foreground sm:inline">
+          <span className="hidden font-mono text-xs font-semibold uppercase tracking-widest text-foreground sm:inline">
             Igor Govtvian
           </span>
         </Link>
@@ -39,7 +40,8 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
+          <SocialLinks className="hidden gap-2 md:flex" iconClassName="size-4" />
           <AuthActions />
         </div>
       </div>

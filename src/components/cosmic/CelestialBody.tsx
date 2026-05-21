@@ -31,16 +31,18 @@ type CelestialBodyProps = {
   size?: "md" | "lg" | "xl";
 };
 
+/** Height > width so orbit ellipse fits above the sphere */
 const planetSizeClass: Record<NonNullable<CelestialBodyProps["size"]>, string> = {
-  md: "h-36 w-36",
-  lg: "h-48 w-48 md:h-52 md:w-52",
-  xl: "h-56 w-56 sm:h-64 sm:w-64 md:h-72 md:w-72 lg:h-80 lg:w-80",
+  md: "h-40 w-32 sm:h-44 sm:w-36",
+  lg: "h-48 w-40 sm:h-52 sm:w-44 md:h-56 md:w-48",
+  xl:
+    "h-44 w-36 min-[480px]:h-48 min-[480px]:w-40 sm:h-52 sm:w-44 md:h-56 md:w-48 lg:h-60 lg:w-52 xl:h-64 xl:w-56 2xl:h-68 2xl:w-60",
 };
 
 export function CelestialBody({ variant, glow, size = "lg" }: CelestialBodyProps) {
   if (variant === "sun") {
     const sunSize =
-      size === "xl" ? "lg" : size === "lg" ? "md" : "sm";
+      size === "xl" ? "section" : size === "lg" ? "md" : "sm";
     return <AnimatedSun size={sunSize} />;
   }
   return (

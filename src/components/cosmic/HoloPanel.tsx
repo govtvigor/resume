@@ -78,7 +78,7 @@ export function HoloPanel({
 
       <header
         className={cn(
-          "border-b border-inherit px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em]",
+          "border-b border-inherit px-4 py-2 font-mono text-xs uppercase tracking-[0.2em]",
           a.title
         )}
       >

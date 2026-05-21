@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { upsertPilotFromSession } from "@/lib/arcade/pilot-repository";
 
 const authSecret =
   process.env.AUTH_SECRET ??
@@ -23,6 +24,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
   providers: [...googleProviders],
   session: { strategy: "jwt" },
+  events: {
+    async signIn({ user }) {
+      if (user.id && user.email) {
+        await upsertPilotFromSession({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          image: user.image,
+        }).catch(() => {
+          /* Mongo optional at sign-in */
+        });
+      }
+    },
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user?.id) {

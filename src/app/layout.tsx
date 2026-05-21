@@ -3,6 +3,7 @@ import { JetBrains_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { CosmicBackground } from "@/components/cosmic/CosmicBackground";
 import { AppProviders } from "@/components/providers/app-providers";
+import { buildRootMetadata, personJsonLd, webSiteJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 const manrope = Manrope({
@@ -17,14 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Igor Govtvan — Portfolio",
-    template: "%s — Igor Govtvan",
-  },
-  description:
-    "Frontend developer portfolio: CV, projects, and arcade hub.",
-};
+export const metadata: Metadata = buildRootMetadata();
 
 export default function RootLayout({
   children,
@@ -34,6 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("dark", manrope.variable, jetbrainsMono.variable)}>
       <body className="min-h-screen overflow-x-hidden bg-transparent font-sans antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([personJsonLd(), webSiteJsonLd()]),
+          }}
+        />
         <CosmicBackground />
         <AppProviders>
           <div className="relative z-10 min-h-screen">{children}</div>

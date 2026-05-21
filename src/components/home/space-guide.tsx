@@ -9,53 +9,8 @@ import {
   hasSeenSpaceGuide,
   markSpaceGuideSeen,
 } from "@/lib/guide-storage";
+import { guideSteps } from "@/lib/space-guide-steps";
 import { cn } from "@/lib/utils";
-
-export type GuideStep = {
-  id: string;
-  /** Section to scroll to and highlight; null = stay on current / no focus */
-  sectionIndex: number | null;
-  message: string;
-};
-
-export const guideSteps: GuideStep[] = [
-  {
-    id: "welcome",
-    sectionIndex: null,
-    message:
-      "Hey, explorer! I'm your W Guide. Welcome to Igor's cosmic portfolio — three worlds, one orbit.",
-  },
-  {
-    id: "scroll-hint",
-    sectionIndex: null,
-    message:
-      "Use your scroll wheel or swipe — you'll move one planet at a time. I'll walk you through each one.",
-  },
-  {
-    id: "about",
-    sectionIndex: 0,
-    message:
-      "This golden sun is About Me — CV, experience, skills, and a contact form. Tap it when you're ready to land.",
-  },
-  {
-    id: "projects",
-    sectionIndex: 1,
-    message:
-      "The blue ocean world is Projects — repositories, demos, and write-ups from real builds.",
-  },
-  {
-    id: "arcade",
-    sectionIndex: 2,
-    message:
-      "The ember planet is Arcade — casual mini-games are docking soon. Explore what's live today!",
-  },
-  {
-    id: "done",
-    sectionIndex: null,
-    message:
-      "You're cleared for launch. Pick any planet to warp in — I'll stay out of your way. Fly safe!",
-  },
-];
 
 type SpaceGuideProps = {
   onNavigateToSection: (index: number) => void;
@@ -119,12 +74,12 @@ export function SpaceGuide({
 
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex justify-center px-4 pb-4 md:justify-start md:pl-6 md:pr-8"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex justify-center px-3 pb-3 sm:px-4 sm:pb-4 md:justify-start md:pl-6 md:pr-8"
       role="dialog"
       aria-labelledby="space-guide-title"
       aria-describedby="space-guide-text"
     >
-      <div className="pointer-events-auto flex w-full max-w-lg items-end gap-3 md:max-w-xl">
+      <div className="pointer-events-auto flex w-full max-w-[min(100%,28rem)] items-end gap-2 sm:max-w-lg sm:gap-3 md:max-w-xl">
         <div className="relative shrink-0">
           <div
             className="absolute -inset-2 rounded-full bg-teal-500/20 blur-xl"
@@ -135,7 +90,7 @@ export function SpaceGuide({
             alt="W Guide — your portfolio navigator"
             width={140}
             height={180}
-            className="relative h-28 w-auto drop-shadow-[0_0_24px_rgba(38,166,154,0.45)] sm:h-36 md:h-44"
+            className="relative h-20 w-auto drop-shadow-[0_0_24px_rgba(38,166,154,0.45)] sm:h-28 md:h-36 lg:h-40"
             priority
           />
         </div>
@@ -150,11 +105,11 @@ export function SpaceGuide({
             <div>
               <p
                 id="space-guide-title"
-                className="font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-teal-300"
+                className="font-mono text-xs font-semibold uppercase tracking-[0.25em] text-teal-300"
               >
                 W Guide
               </p>
-              <p className="text-[10px] text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Step {stepIndex + 1} / {guideSteps.length}
               </p>
             </div>
@@ -170,7 +125,7 @@ export function SpaceGuide({
 
           <p
             id="space-guide-text"
-            className="min-h-[4.5rem] text-sm leading-relaxed text-foreground/95"
+            className="min-h-[3.5rem] text-xs leading-relaxed text-foreground/95 sm:min-h-[4.5rem] sm:text-sm"
           >
             {typed}
             <span className="ml-0.5 inline-block h-4 w-0.5 animate-pulse bg-orange-400 align-middle" />
@@ -191,7 +146,7 @@ export function SpaceGuide({
               type="button"
               size="sm"
               onClick={goNext}
-              className="bg-teal-600/90 font-mono text-[10px] uppercase tracking-wider hover:bg-teal-500"
+              className="bg-teal-600/90 font-mono text-xs uppercase tracking-wider hover:bg-teal-500"
             >
               {isLast ? "Launch" : "Next"}
             </Button>
@@ -200,7 +155,7 @@ export function SpaceGuide({
               size="sm"
               variant="ghost"
               onClick={dismiss}
-              className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+              className="font-mono text-xs uppercase tracking-wider text-muted-foreground"
             >
               Skip tour
             </Button>

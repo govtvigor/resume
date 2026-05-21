@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, Gamepad2, LogOut, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -51,24 +52,29 @@ export function AuthActions() {
 
   if (status === "loading") {
     return (
-      <Button variant="outline" size="sm" disabled>
-        Loading…
+      <Button variant="outline" size="sm" disabled className="shrink-0">
+        <span className="hidden sm:inline">Loading…</span>
+        <span className="sm:hidden">…</span>
       </Button>
     );
   }
 
   if (status === "authenticated" && session?.user) {
     const { name, email, image } = session.user;
-    const displayTitle = name ?? email ?? "Guest";
+    const displayTitle = name ?? email ?? "Pilot";
 
     return (
       <DropdownMenu>
         <DropdownMenuTrigger
           render={
-            <Button variant="outline" size="sm" className="max-w-[200px] gap-2 pl-1.5">
+            <Button
+              variant="outline"
+              size="sm"
+              className="max-w-[10rem] shrink-0 gap-2 pl-1.5 sm:max-w-[200px]"
+            >
               <Avatar className="size-6">
                 {image ? <AvatarImage src={image} alt={displayTitle} /> : null}
-                <AvatarFallback className="text-[10px]">
+                <AvatarFallback className="text-xs">
                   {userInitials(name, email)}
                 </AvatarFallback>
               </Avatar>
@@ -81,6 +87,9 @@ export function AuthActions() {
           <DropdownMenuGroup>
             <DropdownMenuLabel className="px-2 py-2 font-normal">
               <p className="text-sm font-medium">{displayTitle}</p>
+              <p className="mt-1 font-mono text-xs uppercase tracking-wider text-amber-300/90">
+                Arcade pilot
+              </p>
               {email ? (
                 <p className="mt-1 break-all text-xs text-muted-foreground">
                   {email}
@@ -88,6 +97,19 @@ export function AuthActions() {
               ) : null}
             </DropdownMenuLabel>
           </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            render={
+              <Link href="/galaxy/arcade">
+                <Gamepad2 className="size-4" />
+                Arcade sector
+              </Link>
+            }
+          />
+          <DropdownMenuItem disabled className="opacity-70">
+            <Rocket className="size-4" />
+            Score sync — coming soon
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>
             <LogOut className="size-4" />
@@ -102,11 +124,13 @@ export function AuthActions() {
     <Button
       variant="default"
       size="sm"
-      onClick={() => signIn("google")}
-      className="gap-2"
+      onClick={() => signIn("google", { callbackUrl: "/galaxy/arcade" })}
+      className="shrink-0 gap-1.5 px-2.5 sm:gap-2 sm:px-3"
+      title="Sign in with Google to register as an Arcade pilot (scores coming soon)"
     >
       <GoogleIcon />
-      Google
+      <span className="hidden sm:inline">Pilot login</span>
+      <span className="sm:hidden">Pilot</span>
     </Button>
   );
 }

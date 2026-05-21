@@ -1,107 +1,36 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import type { GalaxyPortalProps } from "@/components/cosmic/GalaxyPortal";
 import { GalaxyPortal } from "@/components/cosmic/GalaxyPortal";
 import { SpaceGuide } from "@/components/home/space-guide";
+import { useHomeScroll } from "@/hooks/use-home-scroll";
 import { cn } from "@/lib/utils";
-
-const SCROLL_LOCK_MS = 1100;
 
 type HomeScrollSectionsProps = {
   sectors: GalaxyPortalProps[];
 };
 
 export function HomeScrollSections({ sectors }: HomeScrollSectionsProps) {
-  const containerRef = useRef<HTMLElement>(null);
-  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
-  const [activeSection, setActiveSection] = useState(0);
-  const activeSectionRef = useRef(0);
-  const scrollLockRef = useRef(false);
-  const [tourActive, setTourActive] = useState(false);
   const [highlightedSection, setHighlightedSection] = useState<number | null>(
     null
   );
 
-  const syncActiveIndex = useCallback((index: number) => {
-    const clamped = Math.max(0, Math.min(sectors.length - 1, index));
-    activeSectionRef.current = clamped;
-    setActiveSection(clamped);
-  }, [sectors.length]);
-
-  const scrollToSection = useCallback(
-    (index: number) => {
-      const section = sectionRefs.current[index];
-      const container = containerRef.current;
-      if (!section || !container) return;
-
-      scrollLockRef.current = true;
-      syncActiveIndex(index);
-
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-
-      window.setTimeout(() => {
-        scrollLockRef.current = false;
-      }, SCROLL_LOCK_MS);
-    },
-    [syncActiveIndex]
-  );
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onScroll = () => {
-      if (scrollLockRef.current) return;
-
-      const { scrollTop, clientHeight } = container;
-      if (clientHeight <= 0) return;
-
-      const index = Math.round(scrollTop / clientHeight);
-      syncActiveIndex(index);
-    };
-
-    container.addEventListener("scroll", onScroll, { passive: true });
-    return () => container.removeEventListener("scroll", onScroll);
-  }, [syncActiveIndex]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onWheel = (event: WheelEvent) => {
-      if (tourActive) {
-        event.preventDefault();
-        return;
-      }
-
-      if (scrollLockRef.current) {
-        event.preventDefault();
-        return;
-      }
-
-      const delta = event.deltaY;
-      if (Math.abs(delta) < 4) return;
-
-      const direction = delta > 0 ? 1 : -1;
-      const next = activeSectionRef.current + direction;
-
-      if (next < 0 || next >= sectors.length) return;
-
-      event.preventDefault();
-      scrollToSection(next);
-    };
-
-    container.addEventListener("wheel", onWheel, { passive: false });
-    return () => container.removeEventListener("wheel", onWheel);
-  }, [sectors.length, scrollToSection, tourActive]);
+  const {
+    containerRef,
+    sectionRefs,
+    activeSection,
+    tourActive,
+    setTourActive,
+    scrollToSection,
+  } = useHomeScroll(sectors.length);
 
   const handleTourChange = useCallback(
     (state: { active: boolean; highlightedSection: number | null }) => {
       setTourActive(state.active);
       setHighlightedSection(state.highlightedSection);
     },
-    []
+    [setTourActive]
   );
 
   return (
@@ -137,15 +66,14 @@ export function HomeScrollSections({ sectors }: HomeScrollSectionsProps) {
       <section
         ref={containerRef}
         className={cn(
-          "home-scroll-sections h-[calc(100dvh-3.5rem)] overflow-y-auto overscroll-y-contain",
+          "home-scroll-sections h-[calc(100dvh-var(--site-header-h))] overflow-y-auto overscroll-y-contain",
           "snap-y snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
           "scroll-smooth"
         )}
         aria-label="Portfolio sectors"
       >
         {sectors.map((sector, index) => {
-          const isHighlighted =
-            tourActive && highlightedSection === index;
+          const isHighlighted = tourActive && highlightedSection === index;
           const isDimmed =
             tourActive &&
             highlightedSection !== null &&
@@ -158,7 +86,9 @@ export function HomeScrollSections({ sectors }: HomeScrollSectionsProps) {
                 sectionRefs.current[index] = el;
               }}
               className={cn(
-                "relative flex min-h-[calc(100dvh-3.5rem)] snap-start snap-always items-center justify-center px-4 pb-44 pt-8 transition-[opacity,filter] duration-700 ease-out md:px-8 md:pb-48",
+                "relative flex min-h-[calc(100dvh-var(--site-header-h))] snap-start snap-always flex-col items-center justify-start overflow-visible",
+                "px-4 pb-36 pt-12 transition-[opacity,filter] duration-700 ease-out",
+                "sm:px-6 sm:pb-40 sm:pt-14 md:px-8 md:pb-44 md:pt-16 lg:pb-40 lg:pt-14 xl:pb-36 2xl:pb-32",
                 isDimmed && "opacity-35 saturate-50",
                 isHighlighted && "z-[56] opacity-100 saturate-100"
               )}
@@ -172,7 +102,9 @@ export function HomeScrollSections({ sectors }: HomeScrollSectionsProps) {
 
               <div
                 className={cn(
-                  "relative flex w-full max-w-2xl flex-col items-center transition-transform duration-700 ease-out",
+                  "relative flex w-full max-w-md flex-col items-center transition-transform duration-700 ease-out",
+                  "sm:max-w-lg md:max-w-xl lg:max-w-2xl",
+                  "translate-y-0 xl:translate-y-6 2xl:translate-y-10",
                   isHighlighted && "scale-[1.02]"
                 )}
               >

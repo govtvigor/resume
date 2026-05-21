@@ -57,7 +57,7 @@ export function GalaxyPortal({
         "group relative flex cursor-pointer flex-col items-center justify-center outline-none transition duration-500",
         "focus-visible:ring-2 focus-visible:ring-cyan-400/60",
         isSection
-          ? "min-h-0 w-full rounded-3xl px-6 py-4 hover:scale-[1.02]"
+          ? "min-h-0 w-full rounded-3xl px-3 py-2 hover:scale-[1.02] sm:px-5 sm:py-3 md:px-6 md:py-4"
           : "min-h-[340px] rounded-2xl px-4 py-8 hover:-translate-y-2"
       )}
     >
@@ -75,8 +75,10 @@ export function GalaxyPortal({
 
       <div
         className={cn(
-          "relative z-10 flex flex-col items-center transition-transform duration-700",
-          isSection ? "scale-100 group-hover:scale-[1.03]" : "group-hover:scale-105"
+          "relative z-10 flex flex-col items-center overflow-visible transition-transform duration-700",
+          isSection
+            ? "scale-100 overflow-visible px-2 pb-2 pt-2 group-hover:scale-[1.03]"
+            : "group-hover:scale-105"
         )}
       >
         <CelestialBody variant={planet} glow={glow} size={isSection ? "xl" : "lg"} />
@@ -86,7 +88,9 @@ export function GalaxyPortal({
         className={cn(
           "relative z-10 text-center font-mono font-semibold uppercase tracking-[0.2em] text-foreground/90 transition duration-300",
           "group-hover:text-foreground",
-          isSection ? "mt-12 text-base md:text-lg" : "mt-10 text-sm",
+          isSection
+            ? "mt-6 text-base font-semibold sm:mt-8 md:mt-10 md:text-lg lg:mt-8 3xl:text-xl xl:mt-6"
+            : "mt-10 text-sm",
           accentText[accent],
           (isActive || isHighlighted) && isSection && "text-foreground"
         )}
@@ -96,17 +100,19 @@ export function GalaxyPortal({
 
       {isSection ? (
         <div
-          className="relative z-10 mt-6 max-w-md text-center"
+          className="relative z-10 mt-4 max-w-xs text-center sm:mt-5 sm:max-w-sm md:mt-6 md:max-w-md"
           style={{ "--glow": glow } as CSSProperties}
         >
-          <div className="mb-3 flex items-center justify-center gap-4 font-mono text-[10px] uppercase tracking-wider">
+          <div className="mb-3 flex items-center justify-center gap-4 font-mono text-xs uppercase tracking-wider">
             <span className={accentText[accent]}>{code}</span>
             <span className="text-muted-foreground">{badgeLabel[badge]}</span>
           </div>
-          <p className="text-sm leading-relaxed text-muted-foreground">{subtitle}</p>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {subtitle}
+          </p>
           <span
             className={cn(
-              "mt-5 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest",
+              "mt-5 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest",
               accentText[accent]
             )}
           >
@@ -124,14 +130,14 @@ export function GalaxyPortal({
           )}
           style={{ "--glow": glow } as CSSProperties}
         >
-          <div className="mb-2 flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-wider">
+          <div className="mb-2 flex items-center justify-between gap-2 font-mono text-xs uppercase tracking-wider">
             <span className={accentText[accent]}>{code}</span>
             <span className="text-muted-foreground">{badgeLabel[badge]}</span>
           </div>
           <p className="text-xs leading-relaxed text-muted-foreground">{subtitle}</p>
           <span
             className={cn(
-              "mt-3 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest",
+              "mt-3 inline-flex items-center gap-1 font-mono text-xs uppercase tracking-widest",
               accentText[accent]
             )}
           >

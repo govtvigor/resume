@@ -28,3 +28,5 @@ jobs:
           AUTH_SECRET: ci-build-placeholder-secret-min-32-chars
           AUTH_GOOGLE_ID: ci-placeholder
           AUTH_GOOGLE_SECRET: ci-placeholder
+          MONGODB_URI: mongodb://ci-placeholder:27017/portfolio
+          NEXT_PUBLIC_SITE_URL: https://example.com

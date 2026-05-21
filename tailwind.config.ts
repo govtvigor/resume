@@ -10,6 +10,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        "3xl": "1920px",
+      },
+      fontSize: {
+        xs: ["12px", { lineHeight: "16px" }],
+        sm: ["16px", { lineHeight: "24px" }],
+        base: ["16px", { lineHeight: "24px" }],
+        lg: ["20px", { lineHeight: "28px" }],
+        xl: ["24px", { lineHeight: "32px" }],
+        "2xl": ["28px", { lineHeight: "36px" }],
+        "3xl": ["32px", { lineHeight: "40px" }],
+        "4xl": ["36px", { lineHeight: "44px" }],
+      },
       fontFamily: {
         sans: ["var(--font-manrope)", "var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],

@@ -20,20 +20,24 @@ function TwinkleStar({ className }: { className: string }) {
 
 type AnimatedSunProps = {
   className?: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "section";
 };
 
 export function AnimatedSun({ className, size = "md" }: AnimatedSunProps) {
   const scale =
     size === "sm"
       ? "scale-[0.72]"
-      : size === "lg"
-        ? "scale-[1.35] md:scale-[1.5]"
+      : size === "section"
+        ? "scale-[0.88] min-[480px]:scale-[0.95] sm:scale-100 md:scale-[1.05] lg:scale-[1.1] xl:scale-[1.15] 2xl:scale-[1.2]"
         : "scale-100";
 
   return (
     <div
-      className={cn("relative flex items-center justify-center", scale, className)}
+      className={cn(
+        "relative flex items-center justify-center overflow-visible py-4",
+        scale,
+        className
+      )}
       aria-hidden
     >
       <div className={styles.banner}>
